@@ -1,9 +1,9 @@
-FROM ubuntu:19.04
+FROM ubuntu:18.04
 
 ARG android_api=21
 ARG android_build_tools_version=28.0.3
 
-ARG android_ndk_version=r19c
+ARG android_ndk_version=r15c
 ARG android_sdk_tools_version=4333796
 
 LABEL description="Ubunutu based android build image. API=${android_api} ndk=${android_ndk_version} build-tools=${android_build_tools_version} sdk-tools=${android_sdk_tools_version}"
@@ -15,14 +15,11 @@ ENV PATH $PATH:$ANDROID_SDK_ROOT/tools/bin
 
 # Basic tools
 RUN apt-get update \
-    && apt-get install -y \    
-    # requirements to build docker image
-    unzip \
-    wget \
-    # basic build requirements
+    && apt-get install -y \
     cmake \
-    # requirements for Android SDK
-    openjdk-8-jre
+    openjdk-8-jre \
+    unzip \
+    wget
 
 # Android NDK
 RUN wget --quiet https://dl.google.com/android/repository/android-ndk-${android_ndk_version}-linux-x86_64.zip -O /tmp/android-ndk.zip \
